@@ -1,2 +1,16 @@
-/.idea/HelloOS.iml
 .idea
+*.o
+*.bin
+*.i
+*.krnl
+*.s
+*.map
+*.lib
+*.btoj
+*.vdi
+*.elf
+*vmdk
+*.lds
+*.mk
+*.mki
+krnlobjs.mh
