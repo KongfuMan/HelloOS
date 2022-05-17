@@ -173,20 +173,12 @@ global  asm_ret_from_user_mode
 	push r14
 	mov r14w,gs
 	push r14
-	
-	;push    ds
-	;push    es
-	;push    fs
-	;push    gs
+
 	
 %endmacro
 
 %macro	RESTOREALLFAULT	0
-   	;pop	gs
-	;pop	fs
-	;pop	es
-	;pop	ds
-	
+
 	pop r14
 	mov gs,r14w
 	pop r14 

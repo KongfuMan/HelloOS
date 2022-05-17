@@ -8,4 +8,5 @@
 #include "config.h"
 #include "bastype.h"
 #include "haltypes.h"
+#include "krltypes.h"
 #endif
