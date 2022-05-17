@@ -8,6 +8,7 @@
 
 void hal_start()
 {
-    for(;;);
+    init_hal();
+//    init_krl();
     return;
 }

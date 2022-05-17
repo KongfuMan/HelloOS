@@ -6,7 +6,6 @@
 #ifndef _IO_H
 #define _IO_H
 
-
 #define ICW1 0x11
 #define ZICW2 0x20
 #define SICW2 0x28
@@ -305,14 +304,14 @@ KLINE u32_t read_kcr2()
 }
 KLINE void set_cr3(u64_t pl4adr)
 {
-	__asm__ __volatile__(
-		
-             "movq %0,%%cr3 \n\t"
-	     :
-             : "r"(pl4adr)
-             : "memory"//, "edx"
-        );
-	return;
+    __asm__ __volatile__(
+
+        "movq %0,%%cr3 \n\t"
+        :
+        : "r"(pl4adr)
+        : "memory" //, "edx"
+    );
+    return;
 }
 
 #endif
