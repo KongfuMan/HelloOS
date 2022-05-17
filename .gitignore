@@ -14,3 +14,4 @@
 *.mk
 *.mki
 krnlobjs.mh
+/release/Cosmos.eki

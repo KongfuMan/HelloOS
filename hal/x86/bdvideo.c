@@ -6,7 +6,7 @@
 #include "cosmostypes.h"
 #include "cosmosmctrl.h"
 
-const char *cosmos_version = "Cosmos\n内核版本:00.01\n彭东 @ 构建于 "__DATE__
+const char *cosmos_version = "Cosmos\nKernel version:00.01\nLiang Chen @ built on "__DATE__
                            " "__TIME__
                            "\n";
 
@@ -64,7 +64,7 @@ void hal_dspversion()
 {
     pixl_t bkpx = set_deffontpx(BGRA(0xff, 0, 0));
     kprint(cosmos_version);
-    kprint("系统处理器工作模式:%d位 系统物理内存大小:%dMB\n", (uint_t)kmachbsp.mb_cpumode, (uint_t)(kmachbsp.mb_memsz >> 20));
+    kprint("Processor working mode:%d bit System physical memory size:%dMB\n", (uint_t)kmachbsp.mb_cpumode, (uint_t)(kmachbsp.mb_memsz >> 20));
     set_deffontpx(bkpx);
     return;
 }
