@@ -9,6 +9,7 @@
 
 void intfltdsc_t_init(intfltdsc_t *initp, u32_t flg, u32_t sts, uint_t prity, uint_t irq)
 {
+
     hal_spinlock_init(&initp->i_lock);
     initp->i_flg = flg;
     initp->i_stus = sts;
@@ -32,6 +33,7 @@ void intfltdsc_t_init(intfltdsc_t *initp, u32_t flg, u32_t sts, uint_t prity, ui
 
 void init_intfltdsc()
 {
+    kprint("    4.3 init_intfltdsc() for 256 fault descriptor\n");
     for (uint_t i = 0; i < IDTMAX; i++)
     {
         intfltdsc_t_init(&machintflt[i], 0, 0, i, i);

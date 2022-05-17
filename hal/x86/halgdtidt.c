@@ -109,7 +109,7 @@ PUBLIC LKINIT void load_x64_tr(u16_t trindx)
 
 PUBLIC LKINIT void init_descriptor()
 {
-
+    kprint("    4.1. init GDT.\n");
     for (u32_t gdtindx = 0; gdtindx < CPUCORE_MAX; gdtindx++)
     {
 
@@ -133,6 +133,7 @@ PUBLIC LKINIT void init_descriptor()
 
 PUBLIC LKINIT void init_idt_descriptor()
 {
+    kprint("    4.2 init_idt_descriptor(): Set default interrupt handler for 256 interrupt\n");
     for (u16_t intindx = 0; intindx <= 255; intindx++)
     {
         set_idt_desc((u8_t)intindx, DA_386IGate, hxi_exc_general_intpfault, PRIVILEGE_KRNL);

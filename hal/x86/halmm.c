@@ -143,6 +143,7 @@ u64_t initpmrge_core(e820map_t *e8sp, u64_t e8nr, phymmarge_t *pmargesp)
 
 void init_phymmarge()
 {
+    kprint("    3.1.Init physical memory. Note: create phymmarge_t from machbstart_t\n");
     machbstart_t *mbsp = &kmachbsp;
     phymmarge_t *pmarge_adr = NULL;
     u64_t pmrgesz = 0;

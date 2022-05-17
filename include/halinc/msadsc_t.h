@@ -62,7 +62,7 @@ typedef struct s_PHYADRFLGS
 }__attribute__((packed)) phyadrflgs_t;
 
 
-
+// Liang: represents a memory page in physical memory
 typedef struct s_MSADSC
 {
 	list_h_t md_list;//16

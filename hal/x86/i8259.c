@@ -7,7 +7,7 @@
 #include "cosmosmctrl.h"
 void init_i8259()
 {
-
+    kprint("    4.4. init_i8259\n");
 	out_u8_p(ZIOPT, ICW1);
 	out_u8_p(SIOPT, ICW1);
 	out_u8_p(ZIOPT1, ZICW2);
@@ -32,6 +32,7 @@ void i8259_send_eoi()
 
 void i8259_enabled_line(u32_t line)
 {
+    kprint("    4.5. i8259_enabled_line(0)");
 	cpuflg_t flags;
 	save_flags_cli(&flags);
 	if (line < 8)
