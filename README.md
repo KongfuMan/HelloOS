@@ -1,36 +1,51 @@
 # HelloOS
 HelloOS is a mini operating system kernel that support:
-- multiple processes 
-- address space
+- Preemptive task 
+- Address space
 - IO device management
+- ...
 
-### Build the kernel code:
-`make all`
+#### build the kernel code:
+```shell
+ make build
+```
 
-### Build and start the kernel:
-`make vboxtest`
+#### run kernel from the virtual machine
+```shell
+make VBOXRUN
+```
+
+#### re-build code and start the kernel from the virtual machine:
+```shell
+make vboxtest
+```
 
 
 ### Configure the virtualbox:
-We use linux OS as our development environment, and virtualbox to mock machine bootstrap.
+We use linux OS as our development environment, and virtualbox to simulate hardware bootstrap.
 1. Download and install [virtualbox](https://www.virtualbox.org/wiki/Downloads)
 2. Create OS image file:
-
- `> dd bs=512 if=/dev/zero of=hd.img count=204800`
+    ```shell
+    dd bs=512 if=/dev/zero of=hd.img count=204800
+    ```
    > bs:	表示block size;<br>
    > if：	表示输入文件(intput file)，/dev/zero就是Linux下专门返回0数据的设备文件，读取它就返回0<br>
    > of：表示输出文件(output file)，即我们的硬盘文件。<br>
    > count：表示number of output blocks. 这里文件大小= 204800*512Byte = 100MB
+3. format the file, install `ext4` into the file
+    ```shell
+    sudo losetup /dev/loop0 hd.img
+    sudo mkfs.ext4 -q /dev/loop0  #安装ext4文件系统到loop0
+    sudo mount -o loop ./hd.img ./hdisk/  #挂载硬盘文件,创建hdisk if not exist
+    ```
 
-  `> sudo losetup /dev/loop0 hd.img`
-  `> sudo mkfs.ext4 -q /dev/loop0 			// 安装ext4文件系统到loop0`
-  `> sudo mount -o loop ./hd.img ./hdisk/   // 挂载硬盘文件,创建hdisk if not exist`
-
- 3. install grub on the image file
-  `> sudo grub-install --boot-directory=./hdisk/boot/ --force --allow-floppy /dev/loop0`
-    > --boot-directory 指向先前我们在虚拟硬盘中建立的boot目录。
-    > --force --allow-floppy 指向我们的虚拟硬盘设备文件/dev/loop0
-    > 
+ 4. install grub on the image file
+    ```shell
+    sudo grub-install --boot-directory=./hdisk/boot/ --force --allow-floppy /dev/loop0
+    ```
+    > --boot-directory 指向先前我们在虚拟硬盘中建立的boot目录。<br>
+    --force --allow-floppy 指向我们的虚拟硬盘设备文件/dev/loop0
+    
  4. 在./hdisk/boot/grub/目录下创建grub.cfg 文本文件，GRUB 正是通过这个文件内容，查找到我们的操作系统映像文件的。
     ```
     menuentry 'Cosmos' {
@@ -45,20 +60,30 @@ We use linux OS as our development environment, and virtualbox to mock machine b
     set timeout=10 #等待10秒钟自动启动
     fi
     ```
- 5. 将编译得到的多个bin files打包成eki文件
-  `> lmoskrlimg -m k -lhf initldrimh.bin -o Cosmos.eki -f initldrkrl.bin initldrsve.bin`
+ 5. Package multiple bin files into a single eki file
+    ```shell
+    lmoskrlimg -m k -lhf initldrimh.bin -o Cosmos.eki -f initldrkrl.bin initldrsve.bin
+    ```
 
- 6. 将Cosmos.eki文件拷贝到 ./hdisk/boot/ 文件夹下面
-  `> sudo cp Cosmos.eki ./hdisk/boot/`
+ 6. Copy Cosmos.eki file into ./hdisk/boot/ folder
+    ```shell
+    sudo cp Cosmos.eki ./hdisk/boot/
+    ```
     
-  7. Detach the loop device
-  `> sudo losetup --detach /dev/loop0`
+ 7. Detach the loop device
+    ```shell
+    sudo losetup --detach /dev/loop0
+    ```
      
-  8. unmount ./hdisk
-  `> sudo umount ./hdisk/`
+ 8. unmount ./hdisk
+    ```shell
+    sudo umount ./hdisk/
+    ```
      
-  9. Convert .img format into .vdi
-  `VBoxManage convertfromraw ./hd.img --format VDI ./hd.vdi`
+ 9. Convert .img format into .vdi
+    ```shell
+    VBoxManage convertfromraw ./hd.img --format VDI ./hd.vdi
+    ```
 
 ### Kernel Boot Sequence:
 1、grub启动后，选择对应的启动菜单项，grub会通过自带文件系统驱动，定位到对应的[Cosmos.eki]文件
